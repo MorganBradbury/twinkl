@@ -52,7 +52,7 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:3000/user/99bdfe1f-e80b-456d-a69a-8040fe700bfa",
+					"raw": "http://localhost:3000/user/{add UserId}",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -60,7 +60,7 @@
 					"port": "3000",
 					"path": [
 						"user",
-						"99bdfe1f-e80b-456d-a69a-8040fe700bfa"
+						"{add UserId}"
 					]
 				}
 			},
