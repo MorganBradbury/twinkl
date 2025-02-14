@@ -1,13 +1,16 @@
-import express, { Express, Request, Response } from 'express';
+import express, { Request, Response } from "express";
 
-const app: Express = express();
-const port = process.env.PORT || 3000;
 
-app.get('/', (req: Request, res: Response) => {
-  res.send('Hello World!');
+const app = express();
+
+// Middleware
+app.use(express.json());
+
+// Routes
+app.get("/", (req: Request, res: Response): void => {
+  res.status(200).json({ message: "Hello, world!" });
 });
 
-app.listen(port, () => {
-  // eslint-disable-next-line no-console
-  console.log(`[server]: Server is running at http://localhost:${port}`);
-});
+
+// Export the app
+export default app;
