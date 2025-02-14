@@ -15,6 +15,12 @@ const mocks = {
     password: "",
     userType: "",
   },
+  passwordAboveMaxMock: {
+    fullName: "John Doe",
+    email: "johndoe@example.com",
+    password: "PasswordIsWayWayTooBigForTheValidationToAcceptThisValue123456789!",
+    userType: "STUDENT",
+  },
 };
 
 // Initialize Prisma Client
@@ -31,7 +37,7 @@ describe("User Controller", () => {
     await clearDatabase();
   });
 
-  describe("POST /sign-up", () => {
+  describe("POST /signup", () => {
     it("should create a new user successfully", async () => {
       const response = await request(app)
         .post("/signup")
@@ -53,7 +59,7 @@ describe("User Controller", () => {
       expect(response.body.message).toBe("User already exists");
     });
 
-    it("should return status 400 if the request body does not meet requirements", async () => {
+    it("should return status 400 if the request body does not pass validation rules", async () => {
       const response = await request(app)
         .post("/signup")
         .send(mocks.emptyUserMock);
@@ -70,6 +76,20 @@ describe("User Controller", () => {
         "Password must contain a lowercase letter",
         "Password must contain an uppercase letter",
         "Invalid enum value. Expected 'STUDENT' | 'TEACHER' | 'PARENT' | 'PRIVATE_TUTOR', received ''",
+      ]);
+    });
+
+    it("should return status 400 if the password characters is more than the max allowed value", async () => {
+      const response = await request(app)
+        .post("/signup")
+        .send(mocks.passwordAboveMaxMock);
+
+      expect(response.status).toBe(400);
+      expect(response.body.message).toBe("Validation failed");
+
+      // Check the individual errors
+      expect(response.body.errors).toEqual([
+        "Password must be at most 64 characters",
       ]);
     });
   });
