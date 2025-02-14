@@ -7,7 +7,7 @@
 	},
 	"item": [
 		{
-			"name": "/api/sign-up",
+			"name": "/signup",
 			"request": {
 				"method": "POST",
 				"header": [],
@@ -21,7 +21,7 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:3000/api/signup",
+					"raw": "http://localhost:3000/signup",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -36,7 +36,7 @@
 			"response": []
 		},
 		{
-			"name": "/api/user/{userId}",
+			"name": "/user/{userId}",
 			"protocolProfileBehavior": {
 				"disableBodyPruning": true
 			},
@@ -53,7 +53,7 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:3000/api/user/99bdfe1f-e80b-456d-a69a-8040fe700bfa",
+					"raw": "http://localhost:3000/user/99bdfe1f-e80b-456d-a69a-8040fe700bfa",
 					"protocol": "http",
 					"host": [
 						"localhost"
