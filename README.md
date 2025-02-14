@@ -13,6 +13,13 @@ This application is built with TypeScript, Node.js, SQLite3, Prisma, Zod, and Je
     "password": "Password1234!",
     "userType": "STUDENT"
 }`.
+- Password must meet the criteria:
+        1. Between 8 and 64 characters
+        2. Must contain at least one digit (0-9)
+        2. Must contain at least one lowercase letter (a-z)
+        4. Must contain at least one uppercase letter (A-Z)
+
+- userType must be of value:   "STUDENT" | "TEACHER" | "PARENT" | "PRIVATE_TUTOR"
 
 ### GET `/user/{userId}`
 
