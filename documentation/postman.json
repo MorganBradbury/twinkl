@@ -28,7 +28,6 @@
 					],
 					"port": "3000",
 					"path": [
-						"api",
 						"signup"
 					]
 				}
@@ -60,7 +59,6 @@
 					],
 					"port": "3000",
 					"path": [
-						"api",
 						"user",
 						"99bdfe1f-e80b-456d-a69a-8040fe700bfa"
 					]
