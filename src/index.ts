@@ -1,5 +1,6 @@
 import express, { Request, Response } from "express";
 import userRouter from "./routers/userRouter";
+import { errorHandler } from "./middleware/errorHandler";
 
 const app = express();
 
@@ -12,7 +13,8 @@ app.get("/", (req: Request, res: Response): void => {
 });
 
 // Main Routes and middleware
-app.use("/", userRouter);
+app.use("/", userRouter); // User router.
+app.use(errorHandler); // Middleware error handling for failure requests.
 
 // Export the app
 export default app;
