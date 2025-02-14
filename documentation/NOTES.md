@@ -21,7 +21,7 @@
 
 ---
 
-# Things I Would Improve If I Had More Time
+# Things I would improve if I had more time
 
 1. **Add Test Database Implementation**  
    Set up a separate database for tests to avoid affecting the database.
