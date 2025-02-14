@@ -1,0 +1,72 @@
+{
+	"info": {
+		"_postman_id": "395af91b-6154-4e8c-b690-c7f6f730cd32",
+		"name": "Twinkl API",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "12692495"
+	},
+	"item": [
+		{
+			"name": "/api/sign-up",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"fullName\":\"Morgan Bradbury\",\n    \"email\": \"test@google.com\",\n    \"password\": \"Password1234!\",\n    \"userType\": \"STUDENT\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/api/signup",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"signup"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/api/user/{userId}",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"fullName\":\"Morgan Bradbury\",\n    \"email\": \"test@google.com\",\n    \"password\": \"Pord1234!\",\n    \"userType\": \"STUDENT\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/api/user/99bdfe1f-e80b-456d-a69a-8040fe700bfa",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"user",
+						"99bdfe1f-e80b-456d-a69a-8040fe700bfa"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
