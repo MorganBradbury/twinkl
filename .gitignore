@@ -24,4 +24,3 @@ coverage/
 #Prisma related files
 src/prisma/database.db
 src/prisma/database.db-journal
-src/prisma/migrations
