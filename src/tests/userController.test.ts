@@ -18,7 +18,8 @@ const mocks = {
   passwordAboveMaxMock: {
     fullName: "John Doe",
     email: "johndoe@example.com",
-    password: "PasswordIsWayWayTooBigForTheValidationToAcceptThisValue123456789!",
+    password:
+      "PasswordIsWayWayTooBigForTheValidationToAcceptThisValue123456789!",
     userType: "STUDENT",
   },
 };
@@ -123,7 +124,6 @@ describe("User Controller", () => {
     it("should return status 404 if the user is not found", async () => {
       const response = await request(app).get("/user/nonexistent-id");
       // Non-existing ID
-      console.log(response.body);
       expect(response.status).toBe(404);
       expect(response.body.message).toBe("User not found");
     });
