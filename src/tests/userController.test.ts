@@ -1,28 +1,9 @@
 import request from "supertest";
 import { PrismaClient } from "@prisma/client";
 import app from "../../src";
+import { mocks } from "../mocks/users";
 
-const mocks = {
-  genericUserMock: {
-    fullName: "John Doe",
-    email: "johndoe@example.com",
-    password: "Password123!",
-    userType: "STUDENT",
-  },
-  emptyUserMock: {
-    fullName: "",
-    email: "",
-    password: "",
-    userType: "",
-  },
-  passwordAboveMaxMock: {
-    fullName: "John Doe",
-    email: "johndoe@example.com",
-    password:
-      "PasswordIsWayWayTooBigForTheValidationToAcceptThisValue123456789!",
-    userType: "STUDENT",
-  },
-};
+const { genericUserMock, emptyUserMock, passwordAboveMaxMock } = mocks;
 
 // Initialize Prisma Client
 const prisma = new PrismaClient();
@@ -40,9 +21,7 @@ describe("User Controller", () => {
 
   describe("POST /signup", () => {
     it("should create a new user successfully", async () => {
-      const response = await request(app)
-        .post("/signup")
-        .send(mocks.genericUserMock);
+      const response = await request(app).post("/signup").send(genericUserMock);
 
       expect(response.status).toBe(201);
       expect(response.body.message).toBe("User created successfully");
@@ -50,20 +29,18 @@ describe("User Controller", () => {
     });
 
     it("should return status 409 if the user already exists", async () => {
-      await request(app).post("/signup").send(mocks.genericUserMock);
+      await request(app).post("/signup").send(genericUserMock);
 
       const response = await request(app)
         .post("/signup") // Trying to create the same user again
-        .send(mocks.genericUserMock);
+        .send(genericUserMock);
 
       expect(response.status).toBe(409);
       expect(response.body.message).toBe("User already exists");
     });
 
     it("should return status 400 if the request body does not pass validation rules", async () => {
-      const response = await request(app)
-        .post("/signup")
-        .send(mocks.emptyUserMock);
+      const response = await request(app).post("/signup").send(emptyUserMock);
 
       expect(response.status).toBe(400);
       expect(response.body.message).toBe("Validation failed");
@@ -83,7 +60,7 @@ describe("User Controller", () => {
     it("should return status 400 if the password characters is more than the max allowed value", async () => {
       const response = await request(app)
         .post("/signup")
-        .send(mocks.passwordAboveMaxMock);
+        .send(passwordAboveMaxMock);
 
       expect(response.status).toBe(400);
       expect(response.body.message).toBe("Validation failed");
@@ -99,7 +76,7 @@ describe("User Controller", () => {
     it("should return a user by ID", async () => {
       const createResponse = await request(app)
         .post("/signup")
-        .send(mocks.genericUserMock);
+        .send(genericUserMock);
 
       const userId = createResponse.body.userId;
 
@@ -109,15 +86,12 @@ describe("User Controller", () => {
       expect(response.body).toHaveProperty("id", userId);
       expect(response.body).toHaveProperty(
         "fullName",
-        mocks.genericUserMock.fullName
+        genericUserMock.fullName
       );
-      expect(response.body).toHaveProperty(
-        "email",
-        mocks.genericUserMock.email
-      );
+      expect(response.body).toHaveProperty("email", genericUserMock.email);
       expect(response.body).toHaveProperty(
         "userType",
-        mocks.genericUserMock.userType
+        genericUserMock.userType
       );
     });
 
