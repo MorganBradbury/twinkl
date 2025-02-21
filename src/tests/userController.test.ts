@@ -2,6 +2,7 @@ import request from "supertest";
 import { PrismaClient } from "@prisma/client";
 import app from "../../src";
 import { mocks } from "../mocks/users";
+import { getMaxDate } from "../utils/dateUtils";
 
 const { genericUserMock, emptyUserMock, passwordAboveMaxMock } = mocks;
 
@@ -100,6 +101,46 @@ describe("User Controller", () => {
       // Non-existing ID
       expect(response.status).toBe(404);
       expect(response.body.message).toBe("User not found");
+    });
+  });
+
+  describe("DELETE /user/:id", () => {
+    it("Should delete an existing user if younger than 14 days", async () => {
+      const createUser = prisma.user.create({
+        data: {
+          email: "test@test.co.uk",
+          createdAt: new Date(),
+          fullName: "Test User",
+          password: "",
+          userType: "STUDENT",
+        },
+      });
+
+      const createdUserId = (await createUser).id;
+
+      const deleteUserRequest = await request(app)
+        .delete(`/user/${createdUserId}`)
+        .send();
+      expect(deleteUserRequest.status).toBe(204);
+    });
+
+    it("Shouldn't delete an existing user if older than 14 days", async () => {
+      const createUser = prisma.user.create({
+        data: {
+          email: "test@test.co.uk",
+          createdAt: getMaxDate(),
+          fullName: "Test User",
+          password: "",
+          userType: "STUDENT",
+        },
+      });
+
+      const createdUserId = (await createUser).id;
+
+      const deleteUserRequest = await request(app)
+        .delete(`/user/${createdUserId}`)
+        .send();
+      expect(deleteUserRequest.status).toBe(400);
     });
   });
 

@@ -1,6 +1,7 @@
 import { PrismaClient, UserType } from "@prisma/client";
 import bcrypt from "bcryptjs";
 import { AppError } from "../utils/appError";
+import { isDateOlderThan14Days } from "../utils/dateUtils";
 
 const prisma = new PrismaClient();
 
@@ -34,4 +35,18 @@ export const getUserById = async (id: string) => {
       createdAt: true,
     },
   });
+};
+
+export const deleteUserById = async (id: string) => {
+  const user = await getUserById(id);
+
+  if (!user) {
+    return false;
+  }
+
+  if (isDateOlderThan14Days(user.createdAt)) {
+    return false;
+  }
+
+  return prisma.user.delete({ where: { id } });
 };

@@ -1,7 +1,11 @@
 // userController.ts
 
 import { Request, Response, NextFunction } from "express";
-import { createUser, getUserById } from "../services/userService";
+import {
+  createUser,
+  deleteUserById,
+  getUserById,
+} from "../services/userService";
 import { User } from "../types/User";
 
 // Sign up API.
@@ -32,6 +36,23 @@ export const getUser = async (
     const user = await getUserById(req.params.id);
     if (!user) return res.status(404).json({ message: "User not found" });
     res.json(user);
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const deleteUser = async (
+  req: Request<{ id: string }>,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    // Goes to DB and deletes record if older than 14 days.
+    const user = await deleteUserById(req.params.id);
+
+    if (!user) return res.status(400).send();
+
+    return res.status(204).send();
   } catch (error) {
     next(error);
   }
